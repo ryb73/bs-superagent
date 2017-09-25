@@ -30,9 +30,7 @@ module Request(M: { type t; }) => {
     let end_ req => {
         Js.Promise.make @@ fun ::resolve reject::_ => {
             _end req (fun err result => {
-                Js.log err;
-                Js.log result;
-                resolve (err, result) [@bs];
+                resolve (Js.Undefined.to_opt err, Js.Undefined.to_opt result) [@bs];
             })
         };
     };

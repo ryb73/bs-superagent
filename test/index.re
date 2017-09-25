@@ -5,7 +5,7 @@ get "api/"
     |> Get.withCredentials
     |> Get.end_
     |> then_ @@ fun (err, res) => {
-        resolve @@ switch (Js.Undefined.to_opt res) {
+        resolve @@ switch (res) {
             | None => Js.log @@ "Error: " ^ (Js.String.make err)
             | Some res => {
                 switch (Falsy.to_opt res##error) {
