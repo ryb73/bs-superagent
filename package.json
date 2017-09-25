@@ -17,8 +17,10 @@
     "type": "git",
     "url": "git@github.com:ryb73/bs-superagent.git"
   },
+  "peerDependencies": {
+    "bs-platform": "^1.9.2"
+  },
   "devDependencies": {
-    "bs-platform": "^1.9.2",
     "superagent": "^3.6.0"
   }
 }
