@@ -1,0 +1,24 @@
+{
+  "name": "bs-superagent",
+  "version": "1.0.0",
+  "description": "BuckleScript bindings for superagent",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run clean && bsb -make-world",
+    "watch": "npm run clean && bsb -make-world -w",
+    "clean": "bsb -clean-world && rm -rf lib"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "author": "Ryan Biwer",
+  "_": [],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:ryb73/bs-superagent.git"
+  },
+  "devDependencies": {
+    "bs-platform": "^1.9.2",
+    "superagent": "^3.6.0"
+  }
+}
