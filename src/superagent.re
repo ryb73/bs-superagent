@@ -1,5 +1,5 @@
-type result 'a = Js.t {.
-    body: Js.null (Js.t {..} as 'a),
+type result = Js.t {.
+    body: Js.nullable Js.Json.t,
     clientError: Js.boolean,
     info: Js.boolean,
     notFound: Js.boolean,
@@ -22,15 +22,16 @@ type result 'a = Js.t {.
 
 module Request(M: { type t; }) => {
     external withCredentials : M.t => M.t = "" [@@bs.send];
+    external query : Js.t {..} => M.t = "" [@@bs.send.pipe: M.t];
 
     external _end :
-        M.t => (Js.undefined string => Js.undefined (result 'a) => unit)
+        M.t => (Js.nullable string => Js.nullable result => unit)
         => unit = "end" [@@bs.send];
 
     let end_ req => {
         Js.Promise.make @@ fun ::resolve reject::_ => {
             _end req (fun err result => {
-                resolve (Js.Undefined.to_opt err, Js.Undefined.to_opt result) [@bs];
+                resolve (Js.Nullable.to_opt err, Js.Nullable.to_opt result) [@bs];
             })
         };
     };
@@ -41,6 +42,8 @@ module Post = {
     type t2 = t;
 
     include Request({ type t = t2; });
+
+    external send : Js.t {..} => t = "" [@@bs.send.pipe: t];
 };
 
 module Get = {
