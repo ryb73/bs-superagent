@@ -1,0 +1,8 @@
+{
+	"isLinked": null,
+	"links": [
+		"ppx_autoserialize",
+		"bs-batteries",
+		"bs-platform"
+	]
+}
