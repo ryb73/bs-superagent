@@ -1,4 +1,5 @@
 open Js.Result;
+open Js.Promise;
 open Option.Infix;
 
 [@autoserialize]
@@ -62,6 +63,8 @@ type header =
     | Accept(contentType)
     | Authorization(authorizationType, string);
 
+exception ReqError(result);
+
 module Request = (M: { type t; }) => {
     [@bs.send] external withCredentials : M.t => M.t = "";
     [@bs.send.pipe : M.t] external query : Js.Dict.t(string) => M.t = "";
@@ -69,23 +72,22 @@ module Request = (M: { type t; }) => {
     [@bs.send] external _end : (M.t, (Js.nullable(string), Js.nullable(Js.Json.t)) => unit) => unit = "end";
 
     let end_ = (req) =>
-        Js.Promise.make((~resolve, ~reject as _) =>
-            _end(req, (err, resp) =>
+        Js.Promise.make((~resolve, ~reject as _) => _end(req, (err, resp) => [@bs] resolve((err, resp))))
+            |> then_(((err, resp)) =>
                 switch (Js.Nullable.to_opt(resp)) {
                     | Some(resp) =>
                         switch ((Js.Nullable.to_opt(err), result__from_json(resp))) {
                             | (Some(errMsg), Error(_)) => Js.Exn.raiseError(errMsg)
-                            | (Some(_), Ok(_resp)) => Js.Exn.raiseError("ope")
+                            | (Some(_), Ok(resp)) => raise(ReqError(resp))
                             | (None, Error(e)) => Js.Exn.raiseError("Error parsing response: " ++ (e |? ""))
-                            | (_, Ok(resp)) => [@bs] resolve(resp)
+                            | (_, Ok(resp)) => resolve(resp)
                         }
 
                     | None =>
                         Js.Nullable.to_opt(err) |? "Unknown Error"
                             |> Js.Exn.raiseError
                 }
-            )
-        );
+            );
 
     [@bs.send.pipe : M.t] external setHeaderCustom : (string, string) => M.t = "set";
     let setHeader = (header, req) =>
