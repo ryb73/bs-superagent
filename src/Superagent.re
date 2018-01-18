@@ -46,10 +46,10 @@ type result = {
     serverError: bool,
     status: int,
     statusCode: int,
-    statusText: string,
+    statusText: [@autoserialize.nullable] option(string),
     statusType: int,
     text: string,
-    error: [@autoserialize.custom (serializeReqErrorOpt, deserializeReqErrorOpt, to_devtools)] option(reqError)
+    error: [@autoserialize.falsable] option(reqError)
 };
 
 type contentType =
