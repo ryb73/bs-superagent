@@ -1,5 +1,5 @@
 open Js.Result;
-open Js.Promise;
+open Bluebird;
 open Option.Infix;
 
 [@autoserialize]
@@ -72,7 +72,7 @@ module Request = (M: { type t; }) => {
     [@bs.send] external _end : (M.t, (Js.nullable(string), Js.nullable(Js.Json.t)) => unit) => unit = "end";
 
     let end_ = (req) =>
-        Js.Promise.make((~resolve, ~reject as _) => _end(req, (err, resp) => [@bs] resolve((err, resp))))
+        Bluebird.make((~resolve, ~reject as _) => _end(req, (err, resp) => resolve((err, resp))))
             |> then_(((err, resp)) =>
                 switch (Js.Nullable.to_opt(resp)) {
                     | Some(resp) =>

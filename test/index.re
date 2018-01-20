@@ -1,5 +1,5 @@
 open Superagent;
-open Js.Promise;
+open Bluebird;
 
 get("api/")
     |> Get.withCredentials

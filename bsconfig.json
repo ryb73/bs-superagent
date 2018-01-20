@@ -1,6 +1,9 @@
 {
     "name" : "bs-superagent",
-    "bs-dependencies": [ "bs-batteries" ],
+    "bs-dependencies": [
+        "bs-batteries",
+        "bs-bluebird"
+    ],
     "sources" : [
         { "dir" : "src" },
         {

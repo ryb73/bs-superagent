@@ -3,6 +3,8 @@
 	"links": [
 		"ppx_autoserialize",
 		"bs-batteries",
-		"bs-platform"
+		"bs-platform",
+		"bs-bluebird",
+		"bluebird"
 	]
 }
