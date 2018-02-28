@@ -64,6 +64,7 @@ type header =
     | Authorization(authorizationType, string);
 
 exception ReqError(result);
+exception ParseError(Js.Json.t, option(string));
 
 module Request = (M: { type t; }) => {
     [@bs.send] external withCredentials : M.t => M.t = "";
@@ -79,7 +80,7 @@ module Request = (M: { type t; }) => {
                         switch ((Js.Nullable.to_opt(err), result__from_json(resp))) {
                             | (Some(errMsg), Error(_)) => Js.Exn.raiseError(errMsg)
                             | (Some(_), Ok(resp)) => raise(ReqError(resp))
-                            | (None, Error(e)) => Js.Exn.raiseError("Error parsing response: " ++ (e |? ""))
+                            | (None, Error(e)) => reject(ParseError(resp, e))
                             | (_, Ok(resp)) => resolve(resp)
                         }
 
