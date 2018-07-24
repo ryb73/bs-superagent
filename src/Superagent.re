@@ -2,7 +2,7 @@ open Js.Result;
 open Bluebird;
 open Option.Infix;
 
-[@autoserialize]
+[@decco]
 type reqError = {
     method: string,
     status: int,
@@ -13,7 +13,7 @@ type reqError = {
 
 let serializeReqErrorOpt = fun
     | Some(v) => reqError__to_json(v)
-    | None => Js.Json.boolean(Js.false_);
+    | None => Js.Json.boolean(false);
 
 let deserializeReqErrorOpt = (json) =>
     switch (Js.Json.classify(json)) {
@@ -36,9 +36,9 @@ let deserializeJsonOpt = (json) =>
     };
 
 
-[@autoserialize]
+[@decco]
 type result = {
-    body: [@autoserialize.custom (serializeJsonOpt, deserializeJsonOpt, to_devtools)] option(Js.Json.t),
+    body: option(Js.Json.t),
     clientError: bool,
     info: bool,
     notFound: bool,
@@ -46,10 +46,10 @@ type result = {
     serverError: bool,
     status: int,
     statusCode: int,
-    statusText: [@autoserialize.nullable] option(string),
+    statusText: option(string),
     statusType: int,
     text: string,
-    error: [@autoserialize.falsable] option(reqError)
+    error: [@decco.codec Decco.falseable] option(reqError)
 };
 
 type contentType =
@@ -64,7 +64,7 @@ type header =
     | Authorization(authorizationType, string);
 
 exception ReqError(result);
-exception ParseError(Js.Json.t, option(string));
+exception ParseError(Js.Json.t, Decco.decodeError);
 
 module Request = (M: { type t; }) => {
     [@bs.send] external withCredentials : M.t => M.t = "";
@@ -75,9 +75,9 @@ module Request = (M: { type t; }) => {
     let end_ = (req) =>
         Bluebird.make((~resolve, ~reject as _) => _end(req, (err, resp) => resolve((err, resp))))
             |> then_(((err, resp)) =>
-                switch (Js.Nullable.to_opt(resp)) {
+                switch (Js.Nullable.toOption(resp)) {
                     | Some(resp) =>
-                        switch ((Js.Nullable.to_opt(err), result__from_json(resp))) {
+                        switch ((Js.Nullable.toOption(err), result__from_json(resp))) {
                             | (Some(errMsg), Error(_)) => Js.Exn.raiseError(errMsg)
                             | (Some(_), Ok(resp)) => raise(ReqError(resp))
                             | (None, Error(e)) => reject(ParseError(resp, e))
@@ -85,7 +85,7 @@ module Request = (M: { type t; }) => {
                         }
 
                     | None =>
-                        Js.Nullable.to_opt(err) |? "Unknown Error"
+                        Js.Nullable.toOption(err) |? "Unknown Error"
                             |> Js.Exn.raiseError
                 }
             );
