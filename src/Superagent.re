@@ -12,14 +12,14 @@ type reqError = {
 };
 
 let serializeReqErrorOpt = fun
-    | Some(v) => reqError__to_json(v)
+    | Some(v) => reqError_encode(v)
     | None => Js.Json.boolean(false);
 
 let deserializeReqErrorOpt = (json) =>
     switch (Js.Json.classify(json)) {
         | Js.Json.JSONFalse => Ok(None)
         | _ =>
-            switch(reqError__from_json(json)) {
+            switch(reqError_decode(json)) {
                 | Ok(reqError) => Ok(Some(reqError))
                 | Error(e) => Error(e)
             }
@@ -77,7 +77,7 @@ module Request = (M: { type t; }) => {
             |> then_(((err, resp)) =>
                 switch (Js.Nullable.toOption(resp)) {
                     | Some(resp) =>
-                        switch ((Js.Nullable.toOption(err), result__from_json(resp))) {
+                        switch ((Js.Nullable.toOption(err), result_decode(resp))) {
                             | (Some(errMsg), Error(_)) => Js.Exn.raiseError(errMsg)
                             | (Some(_), Ok(resp)) => raise(ReqError(resp))
                             | (None, Error(e)) => reject(ParseError(resp, e))
