@@ -1,6 +1,9 @@
-open Js.Result;
 open Bluebird;
 open Option.Infix;
+
+type request('a);
+type get;
+type post;
 
 [@decco]
 type reqError = {
@@ -10,31 +13,6 @@ type reqError = {
     message: string,
     stack: string
 };
-
-let serializeReqErrorOpt = fun
-    | Some(v) => reqError_encode(v)
-    | None => Js.Json.boolean(false);
-
-let deserializeReqErrorOpt = (json) =>
-    switch (Js.Json.classify(json)) {
-        | Js.Json.JSONFalse => Ok(None)
-        | _ =>
-            switch(reqError_decode(json)) {
-                | Ok(reqError) => Ok(Some(reqError))
-                | Error(e) => Error(e)
-            }
-    };
-
-let serializeJsonOpt = fun
-    | Some(v) => v
-    | None => Js.Json.null;
-
-let deserializeJsonOpt = (json) =>
-    switch (Js.Json.classify(json)) {
-        | JSONNull => Ok(None)
-        | _ => Ok(Some(json))
-    };
-
 
 [@decco]
 type result = {
@@ -66,70 +44,62 @@ type header =
 exception ReqError(result);
 exception ParseError(Js.Json.t, Decco.decodeError);
 
-module Request = (M: { type t; }) => {
-    [@bs.send] external withCredentials : M.t => M.t = "";
-    [@bs.send.pipe : M.t] external query : Js.Dict.t(string) => M.t = "";
+[@bs.send] external withCredentials : request('a) => request('a) = "";
+[@bs.send.pipe : request('a)] external query : Js.Dict.t(string) => request('a) = "";
 
-    [@bs.send] external _end : (M.t, (Js.nullable(string), Js.nullable(Js.Json.t)) => unit) => unit = "end";
+[@bs.send] external _end :
+    request('a)
+    => (Js.nullable(string) => Js.nullable(Js.Json.t) => unit)
+    => unit = "end";
 
-    let end_ = (req) =>
-        Bluebird.make((~resolve, ~reject as _) => _end(req, (err, resp) => resolve((err, resp))))
-            |> then_(((err, resp)) =>
-                switch (Js.Nullable.toOption(resp)) {
-                    | Some(resp) =>
-                        switch ((Js.Nullable.toOption(err), result_decode(resp))) {
-                            | (Some(errMsg), Error(_)) => Js.Exn.raiseError(errMsg)
-                            | (Some(_), Ok(resp)) => raise(ReqError(resp))
-                            | (None, Error(e)) => reject(ParseError(resp, e))
-                            | (_, Ok(resp)) => resolve(resp)
-                        }
-
-                    | None =>
-                        Js.Nullable.toOption(err) |? "Unknown Error"
-                            |> Js.Exn.raiseError
-                }
-            );
-
-    [@bs.send.pipe : M.t] external setHeaderCustom : (string, string) => M.t = "set";
-    let setHeader = (header, req) =>
-        switch header {
-            | ContentType(v) =>
-                let key = "Content-Type";
-                switch v {
-                    | ApplicationJson => setHeaderCustom(key, "application/json", req)
+let end_ = (req) =>
+    Bluebird.make((~resolve, ~reject as _) =>
+        _end(req, (err, resp) => resolve((err, resp)))
+    )
+    |> then_(((err, resp)) =>
+        switch (Js.Nullable.toOption(resp)) {
+            | Some(resp) =>
+                switch ((Js.Nullable.toOption(err), result_decode(resp))) {
+                    | (Some(errMsg), Error(_)) => Js.Exn.raiseError(errMsg)
+                    | (Some(_), Ok(resp)) => raise(ReqError(resp))
+                    | (None, Error(e)) => reject(ParseError(resp, e))
+                    | (_, Ok(resp)) => resolve(resp)
                 }
 
-            | Accept(v) =>
-                let key = "Accept";
-                switch v {
-                    | ApplicationJson => setHeaderCustom(key, "application/json", req)
-                }
+            | None =>
+                Js.Nullable.toOption(err) |? "Unknown Error"
+                    |> Js.Exn.raiseError
+        }
+    );
 
-            | Authorization(authType, credentials) =>
-                let key = "Authorization";
-                switch authType {
-                    | Bearer => setHeaderCustom(key, "Bearer " ++ credentials, req)
-                }
-        };
-};
+[@bs.send.pipe : request('a)]
+external setHeaderCustom : string => string => request('a) = "set";
 
-module Post = {
-    type t;
+let setHeader = (header, req) =>
+    switch header {
+        | ContentType(v) =>
+            let key = "Content-Type";
+            switch v {
+                | ApplicationJson => setHeaderCustom(key, "application/json", req)
+            }
 
-    include Request({ type nonrec t = t; });
+        | Accept(v) =>
+            let key = "Accept";
+            switch v {
+                | ApplicationJson => setHeaderCustom(key, "application/json", req)
+            }
 
-    [@bs.send.pipe : t] external _send : string => t = "send";
+        | Authorization(authType, credentials) =>
+            let key = "Authorization";
+            switch authType {
+                | Bearer => setHeaderCustom(key, "Bearer " ++ credentials, req)
+            }
+    };
 
-    let send = (json, req) => req
-        |> setHeader(ContentType(ApplicationJson))
-        |> _send(Js.Json.stringify(json));
-};
+[@bs.send.pipe: request(post)] external _send : string => request(post) = "send";
+let send = (json, req) => req
+    |> setHeader(ContentType(ApplicationJson))
+    |> _send(Js.Json.stringify(json));
 
-module Get = {
-    type t;
-
-    include Request({ type nonrec t = t; });
-};
-
-[@bs.module "superagent"] external get : string => Get.t = "";
-[@bs.module "superagent"] external post : string => Post.t = "";
+[@bs.module "superagent"] external get : string => request(get) = "";
+[@bs.module "superagent"] external post : string => request(post) = "";

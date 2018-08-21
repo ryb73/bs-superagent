@@ -2,9 +2,9 @@ open Superagent;
 open Bluebird;
 
 get("api/")
-    |> Get.withCredentials
-    |> Get.query(Js.Dict.fromList([("derp", "hello"), ("lmao", "123")]))
-    |> Get.end_
+    |> withCredentials
+    |> query(Js.Dict.fromList([("derp", "hello"), ("lmao", "123")]))
+    |> end_
     |> then_ ((resp) => {
         switch (resp.error) {
             | Some(error) => Js.log("Error: " ++ error.message)
@@ -23,9 +23,9 @@ get("api/")
     });
 
 post("api/post")
-    |> Post.withCredentials
-    |> Post.send (Js.Json.object_(Js.Dict.fromList([("var", Js.Json.string("var"))])))
-    |> Post.end_
+    |> withCredentials
+    |> send (Js.Json.object_(Js.Dict.fromList([("var", Js.Json.string("var"))])))
+    |> end_
     |> then_((result) => {
         Js.log(result);
         resolve()
