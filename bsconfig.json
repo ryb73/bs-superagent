@@ -3,7 +3,8 @@
     "bs-dependencies": [
         "bs-batteries",
         "bs-bluebird",
-        "decco"
+        "decco",
+        "bs-promise-ex",
     ],
     "sources" : [
         { "dir" : "src" },
