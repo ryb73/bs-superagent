@@ -17,7 +17,7 @@ module Make = (Promise : PromiseEx.Promise) => {
     };
 
     [@decco]
-    type result = {
+    type resultWithError = {
         body: option(Js.Json.t),
         clientError: bool,
         info: bool,
@@ -32,6 +32,21 @@ module Make = (Promise : PromiseEx.Promise) => {
         error: [@decco.codec Decco.falseable] option(reqError)
     };
 
+    [@decco]
+    type result = {
+        body: option(Js.Json.t),
+        clientError: bool,
+        info: bool,
+        notFound: bool,
+        ok: bool,
+        serverError: bool,
+        status: int,
+        statusCode: int,
+        statusText: option(string),
+        statusType: int,
+        text: string,
+    };
+
     type contentType =
         | ApplicationJson;
 
@@ -43,7 +58,7 @@ module Make = (Promise : PromiseEx.Promise) => {
         | Accept(contentType)
         | Authorization(authorizationType, string);
 
-    exception ReqError(result);
+    exception ReqError(resultWithError);
     exception ParseError(Js.Json.t, Decco.decodeError);
 
     [@bs.send] external withCredentials : request('a) => request('a) = "";
@@ -54,6 +69,22 @@ module Make = (Promise : PromiseEx.Promise) => {
         => (Js.nullable(string) => Js.nullable(Js.Json.t) => unit)
         => unit = "end";
 
+    let _getResultWithoutError = ({ body, clientError, info, notFound, ok,
+        serverError, status, statusCode, statusText, statusType, text, error: _ })
+    => {
+        body,
+        clientError,
+        info,
+        notFound,
+        ok,
+        serverError,
+        status,
+        statusCode,
+        statusText,
+        statusType,
+        text,
+    };
+
     let end_ = (req) =>
         Promise.make((~resolve, ~reject as _) =>
             _end(req, (err, resp) => resolve(. (err, resp)))
@@ -61,11 +92,12 @@ module Make = (Promise : PromiseEx.Promise) => {
         |> then_(((err, resp)) =>
             switch (Js.Nullable.toOption(resp)) {
                 | Some(resp) =>
-                    switch ((Js.Nullable.toOption(err), result_decode(resp))) {
+                    switch ((Js.Nullable.toOption(err), resultWithError_decode(resp))) {
                         | (Some(errMsg), Error(_)) => Js.Exn.raiseError(errMsg)
                         | (Some(_), Ok(resp)) => raise(ReqError(resp))
                         | (None, Error(e)) => reject(ParseError(resp, e))
-                        | (_, Ok(resp)) => resolve(resp)
+                        | (_, Ok({ error: Some(_) } as resp)) => raise(ReqError(resp))
+                        | (_, Ok(resp)) => resolve(_getResultWithoutError(resp))
                     }
 
                 | None =>

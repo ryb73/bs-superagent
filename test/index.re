@@ -7,13 +7,9 @@
         |> query(Js.Dict.fromList([("derp", "hello"), ("lmao", "123")]))
         |> end_
         |> then_ ((resp) => {
-            switch (resp.error) {
-                | Some(error) => Js.log("Error: " ++ error.message)
-                | None =>
-                    switch (resp.body) {
-                        | None => Js.log("No Body")
-                        | Some(body) => Js.log(body)
-                    }
+            switch (resp.body) {
+                | None => Js.log("No Body")
+                | Some(body) => Js.log(body)
             };
 
             resolve();
@@ -47,13 +43,9 @@
         |> query(Js.Dict.fromList([("derp", "hello"), ("lmao", "123")]))
         |> end_
         |> then_ ((resp) => {
-            switch (resp.error) {
-                | Some(error) => Js.log("Error: " ++ error.message)
-                | None =>
-                    switch (resp.body) {
-                        | None => Js.log("No Body")
-                        | Some(body) => Js.log(body)
-                    }
+            switch (resp.body) {
+                | None => Js.log("No Body")
+                | Some(body) => Js.log(body)
             };
 
             resolve();
