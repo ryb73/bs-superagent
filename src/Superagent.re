@@ -6,6 +6,7 @@ module Make = (Promise : PromiseEx.Promise) => {
     type request('a);
     type get;
     type post;
+    type put;
 
     [@decco]
     type reqError = {
@@ -62,7 +63,14 @@ module Make = (Promise : PromiseEx.Promise) => {
     exception ParseError(Js.Json.t, Decco.decodeError);
 
     [@bs.send] external withCredentials : request('a) => request('a) = "";
-    [@bs.send.pipe : request('a)] external query : Js.Dict.t(string) => request('a) = "";
+
+    [@bs.send.pipe : request('a)]
+    external queryMultiple : Js.Dict.t(string) => request('a) = "query";
+
+    let query = (key, value, req) =>
+        [| (key, value) |]
+            |> Js.Dict.fromArray
+            |> queryMultiple(_, req);
 
     [@bs.send] external _end :
         request('a)
@@ -137,6 +145,7 @@ module Make = (Promise : PromiseEx.Promise) => {
 
     [@bs.module "superagent"] external get : string => request(get) = "";
     [@bs.module "superagent"] external post : string => request(post) = "";
+    [@bs.module "superagent"] external put : string => request(put) = "";
 };
 
 include Make(Js.Promise);

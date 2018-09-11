@@ -4,7 +4,8 @@
 
     get("api/")
         |> withCredentials
-        |> query(Js.Dict.fromList([("derp", "hello"), ("lmao", "123")]))
+        |> queryMultiple(Js.Dict.fromList([("derp", "hello"), ("lmao", "123")]))
+        |> query("and", "another")
         |> end_
         |> then_ ((resp) => {
             switch (resp.body) {
@@ -40,7 +41,8 @@
 
     get("api/")
         |> withCredentials
-        |> query(Js.Dict.fromList([("derp", "hello"), ("lmao", "123")]))
+        |> queryMultiple(Js.Dict.fromList([("derp", "hello"), ("lmao", "123")]))
+        |> query("and", "another")
         |> end_
         |> then_ ((resp) => {
             switch (resp.body) {
