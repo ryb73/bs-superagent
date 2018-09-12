@@ -4,9 +4,11 @@ module Make = (Promise : PromiseEx.Promise) => {
     open Promise;
 
     type request('a);
-    type get;
-    type post;
-    type put;
+    type acceptsBody;
+    type noAcceptBody;
+    type get = noAcceptBody;
+    type post = acceptsBody;
+    type put = acceptsBody;
 
     [@decco]
     type reqError = {
@@ -71,6 +73,14 @@ module Make = (Promise : PromiseEx.Promise) => {
         [| (key, value) |]
             |> Js.Dict.fromArray
             |> queryMultiple(_, req);
+
+    [@bs.send.pipe: request(acceptsBody)]
+    external sendMultiple : Js.Dict.t(Js.Json.t) => request(acceptsBody) = "send";
+
+    let send = (key, value, req) =>
+        [| (key, value) |]
+            |> Js.Dict.fromArray
+            |> sendMultiple(_, req);
 
     [@bs.send] external _end :
         request('a)
@@ -137,11 +147,6 @@ module Make = (Promise : PromiseEx.Promise) => {
                     | Bearer => setHeaderCustom(key, "Bearer " ++ credentials, req)
                 }
         };
-
-    [@bs.send.pipe: request(post)] external _send : string => request(post) = "send";
-    let send = (json, req) => req
-        |> setHeader(ContentType(ApplicationJson))
-        |> _send(Js.Json.stringify(json));
 
     [@bs.module "superagent"] external get : string => request(get) = "";
     [@bs.module "superagent"] external post : string => request(post) = "";
