@@ -21,6 +21,6 @@
     "bs-platform": "^3.1.5"
   },
   "devDependencies": {
-    "superagent": "^3.6.0"
+    "superagent": "^3.8.3"
   }
 }
