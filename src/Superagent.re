@@ -67,6 +67,30 @@ module Make = (Promise : PromiseEx.Promise) => {
     [@bs.send] external withCredentials : request('a) => request('a) = "";
 
     [@bs.send.pipe : request('a)]
+    external setHeaderCustom : string => string => request('a) = "set";
+
+    let setHeader = (header, req) =>
+        switch header {
+            | ContentType(v) =>
+                let key = "Content-Type";
+                switch v {
+                    | ApplicationJson => setHeaderCustom(key, "application/json", req)
+                }
+
+            | Accept(v) =>
+                let key = "Accept";
+                switch v {
+                    | ApplicationJson => setHeaderCustom(key, "application/json", req)
+                }
+
+            | Authorization(authType, credentials) =>
+                let key = "Authorization";
+                switch authType {
+                    | Bearer => setHeaderCustom(key, "Bearer " ++ credentials, req)
+                }
+        };
+
+    [@bs.send.pipe : request('a)]
     external queryMultiple : Js.Dict.t(string) => request('a) = "query";
 
     let query = (key, value, req) =>
@@ -74,13 +98,16 @@ module Make = (Promise : PromiseEx.Promise) => {
             |> Js.Dict.fromArray
             |> queryMultiple(_, req);
 
-    [@bs.send.pipe: request(acceptsBody)]
-    external sendMultiple : Js.Dict.t(Js.Json.t) => request(acceptsBody) = "send";
+    [@bs.send.pipe: request(acceptsBody)] external _send : string => request(post) = "send";
+    let send = (json, req) => req
+        |> setHeader(ContentType(ApplicationJson))
+        |> _send(Js.Json.stringify(json));
 
-    let send = (key, value, req) =>
+    let sendKV = (key, value, req) =>
         [| (key, value) |]
             |> Js.Dict.fromArray
-            |> sendMultiple(_, req);
+            |> Js.Json.object_
+            |> send(_, req);
 
     [@bs.send] external _end :
         request('a)
@@ -123,30 +150,6 @@ module Make = (Promise : PromiseEx.Promise) => {
                         |> Js.Exn.raiseError
             }
         );
-
-    [@bs.send.pipe : request('a)]
-    external setHeaderCustom : string => string => request('a) = "set";
-
-    let setHeader = (header, req) =>
-        switch header {
-            | ContentType(v) =>
-                let key = "Content-Type";
-                switch v {
-                    | ApplicationJson => setHeaderCustom(key, "application/json", req)
-                }
-
-            | Accept(v) =>
-                let key = "Accept";
-                switch v {
-                    | ApplicationJson => setHeaderCustom(key, "application/json", req)
-                }
-
-            | Authorization(authType, credentials) =>
-                let key = "Authorization";
-                switch authType {
-                    | Bearer => setHeaderCustom(key, "Bearer " ++ credentials, req)
-                }
-        };
 
     [@bs.module "superagent"] external get : string => request(get) = "";
     [@bs.module "superagent"] external post : string => request(post) = "";

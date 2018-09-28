@@ -22,7 +22,7 @@
 
     post("api/post")
         |> withCredentials
-        |> sendMultiple (Js.Dict.fromList([("var", Js.Json.string("var"))]))
+        |> send(Js.Json.object_(Js.Dict.fromList([("var", Js.Json.string("var"))])))
         |> end_
         |> then_((result) => {
             Js.log(result);
@@ -35,8 +35,8 @@
 
     put("api/put")
         |> withCredentials
-        |> send("hey", Js.Json.string("no"))
-        |> send("ok", [|Js.Json.string("no")|] |> Js.Json.array)
+        |> sendKV("hey", Js.Json.string("no"))
+        |> sendKV("ok", [|Js.Json.string("no")|] |> Js.Json.array)
         |> end_
         |> then_((result) => {
             Js.log(result);
@@ -73,7 +73,7 @@
 
     post("api/post")
         |> withCredentials
-        |> sendMultiple (Js.Dict.fromList([("var", Js.Json.string("var"))]))
+        |> send(Js.Json.object_(Js.Dict.fromList([("var", Js.Json.string("var"))])))
         |> end_
         |> then_((result) => {
             Js.log(result);
