@@ -5,6 +5,7 @@
         "bs-bluebird",
         "decco",
         "bs-promise-ex",
+        "reduice",
     ],
     "sources" : [
         { "dir" : "src" },
