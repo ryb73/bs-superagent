@@ -12,7 +12,7 @@ type put = acceptsBody;
 type reqError = {
     method: string,
     status: int,
-    url: string,
+    url: option(string),
     message: string,
     stack: string
 };
@@ -131,9 +131,8 @@ let end_ = (req) =>
         switch (Js.Nullable.toOption(resp)) {
             | Some(resp) =>
                 switch ((Js.Nullable.toOption(err), resultWithError_decode(resp))) {
-                    | (Some(errMsg), Error(_)) => Js.Exn.raiseError(errMsg)
+                    | (_, Error(e)) => reject(ParseError(resp, e))
                     | (Some(_), Ok(resp)) => raise(ReqError(resp))
-                    | (None, Error(e)) => reject(ParseError(resp, e))
                     | (_, Ok({ error: Some(_) } as resp)) => raise(ReqError(resp))
                     | (_, Ok(resp)) => resolve(_getResultWithoutError(resp))
                 }
