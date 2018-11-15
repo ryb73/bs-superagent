@@ -30,7 +30,7 @@ type resultWithError = {
     statusText: option(string),
     statusType: int,
     text: string,
-    error: [@decco.codec Decco.falseable] option(reqError)
+    error: [@decco.codec Decco.Codecs.falseable] option(reqError)
 };
 
 [@decco]
