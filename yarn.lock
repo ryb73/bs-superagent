@@ -9,25 +9,22 @@
   dependencies:
     bluebird "^3.5.1"
 
-"@ryb73/decco@0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@ryb73/decco/-/decco-0.0.4.tgz#99f370b5a40df5fb5c6ca5d9779ecb186a8e5ed5"
-  integrity sha512-E5tlonajbMelV9Z0RGwY6i8ebBLty2C2IgrDQJMBZsixOg+J6O2xiSBN37MaHSTz7AhADcOa65jbXimyHZMsdg==
-  dependencies:
-    bs-batteries "0.0.14"
+"@ryb73/decco@0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@ryb73/decco/-/decco-0.0.5.tgz#3b01df85d623f99860950801bf9342f78f19ff6a"
+  integrity sha512-XTS3kNJQLlipb7UFooDpLcUwLBcVYJ8n+ayyrgCyh3NcNnnDQHyozI0ryO6O9Vt9lAIQr72vaadc8+RxANgFYQ==
 
 "@ryb73/opt-ex@^0.0.1":
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/@ryb73/opt-ex/-/opt-ex-0.0.1.tgz#3413304d429d68cedec6491af3d487db28e83266"
   integrity sha512-Rp0OSuQPNvrgMo5FuHBsO9iRwc846Ivso966AwFdDT7lcB/3e7Fyb2JxpufO+UpPvEUc1t2039C3QljprvfnzA==
 
-"@ryb73/prom-ex@0.0.2":
-  version "0.0.2"
-  resolved "https://registry.yarnpkg.com/@ryb73/prom-ex/-/prom-ex-0.0.2.tgz#442c894935a0be7fafa89ffe81f7cc67da92b900"
-  integrity sha512-mYUkwjDkvCGkbY5MvKo/zM0+1Tccj0lC1D5fhfV/rV13VpmpKEuvHMj12tcobKSs3vcbzbGGtrIydzgtxp08hg==
+"@ryb73/prom-ex@0.0.3":
+  version "0.0.3"
+  resolved "https://registry.yarnpkg.com/@ryb73/prom-ex/-/prom-ex-0.0.3.tgz#a6d968da7579b8667fc05ab536bc73ab5464045f"
+  integrity sha512-5HnhbFwW1rt/TrjpglP/o4NwVYh4KNtiu1NDsW8gSqnoMkuBicwWK2DnZX+ebB2qKIj9Qm08T4Qpbl2Wl6x67w==
   dependencies:
     "@ryb73/reduice" "0.0.4"
-    bs-batteries "0.0.14"
 
 "@ryb73/reduice@0.0.4":
   version "0.0.4"
@@ -45,11 +42,6 @@ bluebird@^3.5.1:
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.3.tgz#7d01c6f9616c9a51ab0f8c549a79dfe6ec33efa7"
   integrity sha512-/qKPUQlaW1OyR51WeCPBvRnAlnZFUJkCSG5HzGnuIqhgyJtF+T94lFnn33eiazjRm2LAHVy2guNnaq48X9SJuw==
-
-bs-batteries@0.0.14:
-  version "0.0.14"
-  resolved "https://registry.yarnpkg.com/bs-batteries/-/bs-batteries-0.0.14.tgz#51536a489615087c05774525c38ab56b4d45df4c"
-  integrity sha1-UVNqSJYVCHwFd0Ulw4q1a01F30w=
 
 combined-stream@^1.0.6:
   version "1.0.7"
