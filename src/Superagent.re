@@ -1,5 +1,5 @@
-open Option.Infix;
 open Reduice.Promise;
+open OptEx.Operators;
 
 type request('a);
 type acceptsBody;
