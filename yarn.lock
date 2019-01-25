@@ -14,10 +14,10 @@
   resolved "https://registry.yarnpkg.com/@ryb73/decco/-/decco-0.0.6.tgz#fd772298afc2593e9e2b6cb5ff011e1b912028bb"
   integrity sha512-NPgBWIrXz5GdRDgqZDGFVSYxsIrBssY/iZnJGHiPqXdQqKL5q9nbpJHW9G8wApt98BHyxZZTo45vGGiXiUwu7Q==
 
-"@ryb73/opt-ex@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.yarnpkg.com/@ryb73/opt-ex/-/opt-ex-0.0.4.tgz#a5a059c341039a71302379f7d0c6a42c86e7e95a"
-  integrity sha512-7df4OFf8tsplE3Is5ncqrUO6IUItn8dEeVClqJlGB2Tb45di94hCLlOsspiZYW8q4YACDaoBwCnH+yj/QUlcTg==
+"@ryb73/opt-ex@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@ryb73/opt-ex/-/opt-ex-0.0.5.tgz#6ef250037c5763751f702d8252d84b329976289b"
+  integrity sha512-i3FFv7psAexCYMpRqMnrprkk/qcFVA0sTAJILnA7hW2L2u4KMrgTcAKre0p9EtqLhTmoMAfeMEkvdTd7+UWFdA==
 
 "@ryb73/prom-ex@0.0.7":
   version "0.0.7"
