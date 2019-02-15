@@ -14,24 +14,15 @@
   resolved "https://registry.yarnpkg.com/@ryb73/decco/-/decco-0.0.6.tgz#fd772298afc2593e9e2b6cb5ff011e1b912028bb"
   integrity sha512-NPgBWIrXz5GdRDgqZDGFVSYxsIrBssY/iZnJGHiPqXdQqKL5q9nbpJHW9G8wApt98BHyxZZTo45vGGiXiUwu7Q==
 
-"@ryb73/opt-ex@^0.0.6":
+"@ryb73/opt-ex@0.0.6":
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/@ryb73/opt-ex/-/opt-ex-0.0.6.tgz#551ec30b6cb1d439291fa7c64664ee50eec05212"
   integrity sha512-iZcZS+sTdxLh++wJYsxRHiZ1SNL/inNwRgZjseVDOevPoG9F/Rr1fS0zvtgHBmEdokg6/HQ1+2E6WsAdQTrAUw==
 
-"@ryb73/prom-ex@0.0.7":
-  version "0.0.7"
-  resolved "https://registry.yarnpkg.com/@ryb73/prom-ex/-/prom-ex-0.0.7.tgz#a0579bb6b2e6875d3dcee6d4a7e4cab09dcf8707"
-  integrity sha512-GUJCLgAi447F8EIG90+c3I/8VKh+SyBkLRwURHwHZUa5CVs4HNJtBFXku4a0Gs9JUhzEFtxIO7k/4aMxZrPlPg==
-  dependencies:
-    "@ryb73/reduice" "0.0.8"
-
-"@ryb73/reduice@0.0.8":
+"@ryb73/prom-ex@0.0.8":
   version "0.0.8"
-  resolved "https://registry.yarnpkg.com/@ryb73/reduice/-/reduice-0.0.8.tgz#64f946ef45cb128d18fe105dc850a6f78890b41c"
-  integrity sha512-LLqXLwK7f/tGK+Kvo7VULvJEvbSnF3P093BOSQixfpNqPpGJgQAudp+mQgo1mYK4bfJu/dTqJOToxTPb8KORbA==
-  dependencies:
-    "@ryb73/bs-bluebird" "0.0.3"
+  resolved "https://registry.yarnpkg.com/@ryb73/prom-ex/-/prom-ex-0.0.8.tgz#04e774a7d22789a6a114119a444c8f87d7da70db"
+  integrity sha512-8uTK0p1u4PyCL1FGeK7Q/dVB41sFXv6pvJT2tS/hJ7KhiFWyY/Jupergml2kjmgsylPC4sPOWfp3gvQvo+XDZQ==
 
 asynckit@^0.4.0:
   version "0.4.0"

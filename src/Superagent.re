@@ -1,4 +1,4 @@
-open Reduice.Promise;
+open Js.Promise;
 open OptEx.Operators;
 
 type request('a);
@@ -124,7 +124,7 @@ let _getResultWithoutError = ({ body, clientError, info, notFound, ok,
 };
 
 let end_ = (req) =>
-    Reduice.Promise.make((~resolve, ~reject as _) =>
+    Js.Promise.make((~resolve, ~reject as _) =>
         _end(req, (err, resp) => resolve(. (err, resp)))
     )
     |> then_(((err, resp)) =>

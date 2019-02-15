@@ -1,5 +1,5 @@
 open Superagent;
-open Reduice.Promise;
+open Js.Promise;
 
 get("api/")
     |> withCredentials
