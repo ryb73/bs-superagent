@@ -1,10 +1,8 @@
 {
     "name": "@ryb73/bs-superagent",
     "bs-dependencies": [
-        "@ryb73/bs-bluebird",
         "@ryb73/decco",
         "@ryb73/opt-ex",
-        "@ryb73/prom-ex",
     ],
     "sources": [
         { "dir" : "src" },
