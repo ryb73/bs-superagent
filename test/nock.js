@@ -22,6 +22,6 @@ module.exports = () => {
 
     top
     .post("/post/form")
-    .times(4)
+    .times(6)
     .reply(200, (uri, body) => body)
 };

@@ -92,19 +92,26 @@ let query = (key, value, req) =>
         |> queryMultiple(_, req);
 
 [@bs.send.pipe: request(acceptsBody)]
+external type_: ([@bs.string] [`json | `form]) => request(acceptsBody) = "type";
+
+[@bs.send.pipe: request(acceptsBody)]
 external send : string => request(acceptsBody) = "";
 
 [@bs.send.pipe: request(acceptsBody)]
-external sendJson : Js.Json.t => request(acceptsBody) = "send";
+external _sendJson : Js.Json.t => request(acceptsBody) = "send";
+
+let sendDict = (dict, req) =>
+    Js.Json.object_(dict)
+    |> _sendJson(_, req);
+
+let sendArray = (arr, req) =>
+    Js.Json.array(arr)
+    |> _sendJson(_, req);
 
 let sendKV = (key, value, req) =>
     [| (key, value) |]
     |> Js.Dict.fromArray
-    |> Js.Json.object_
-    |> sendJson(_, req);
-
-[@bs.send.pipe: request(acceptsBody)]
-external type_: ([@bs.string] [`json | `form]) => request(acceptsBody) = "type";
+    |> sendDict(_, req);
 
 [@bs.send.pipe: request(acceptsBody)]
 external field: (string, Js.Json.t) => request(acceptsBody) = "";

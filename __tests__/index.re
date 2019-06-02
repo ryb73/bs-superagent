@@ -55,46 +55,56 @@ describe("query strings", () => {
     });
 });
 
-describe("encoded data", () => {
+describe("post", () => {
     describe("send", () => {
-        let expectData = (setType) => {
-            let dict = [|
-                ("dk", Js.Json.string("dict key")),
-                ("DK", Js.Json.string("dict key is here")),
-            |]
-            |> Js.Dict.fromArray
-            |> Js.Json.object_;
+        let sendMixed = (req) => Js.Json.(
+            req
+            |> sendKV("kay", string("vee"))
+            |> sendKV("keyedArr", array([|string("r")|]))
+            |> sendArray([|string("r"),string("r")|])
+            |> sendDict(
+                [|
+                    ("dk", string("dict key")),
+                    ("DK", string("dict key is here")),
+                |]
+                |> Js.Dict.fromArray
+            )
+        );
 
+        let expectData = (setType, sendData) => {
             post("http://www.ok.com/post/form")
             |> setType
-            |> sendKV("kay", Js.Json.string("vee"))
-            |> sendKV("arr", Js.Json.array([|Js.Json.string("r")|]))
-            |> sendJson(dict)
+            |> sendData
             |> end_
             |> map(({ text }) => expect(text));
         };
 
         describe("form", () => {
             testPromise("type_", () => {
-                expectData(type_(`form))
-                |> map(toBe("kay=vee&arr%5B0%5D=r&dk=dict%20key&DK=dict%20key%20is%20here"))
+                expectData(type_(`form), sendMixed)
+                |> map(toBe("0=r&1=r&kay=vee&keyedArr%5B0%5D=r&dk=dict%20key&DK=dict%20key%20is%20here"))
             });
 
             testPromise("setHeader", () => {
-                expectData(setHeader(ContentType(ApplicationXWwwFormUrlencoded)))
-                |> map(toBe("kay=vee&arr%5B0%5D=r&dk=dict%20key&DK=dict%20key%20is%20here"))
+                expectData(setHeader(ContentType(ApplicationXWwwFormUrlencoded)), sendMixed)
+                |> map(toBe("0=r&1=r&kay=vee&keyedArr%5B0%5D=r&dk=dict%20key&DK=dict%20key%20is%20here"))
             });
+
+            testPromise("raw", () =>
+                expectData(type_(`form), send("rawdata!@#$%^&*()"))
+                |> map(toBe("rawdata!@#$%^&*()"))
+            );
         });
 
         describe("json", () => {
             testPromise("type_", () => {
-                expectData(type_(`json))
-                |> map(toBe("{\"kay\":\"vee\",\"arr\":[\"r\"],\"dk\":\"dict key\",\"DK\":\"dict key is here\"}"))
+                expectData(type_(`json), sendMixed)
+                |> map(toBe({|{"0":"r","1":"r","kay":"vee","keyedArr":["r"],"dk":"dict key","DK":"dict key is here"}|}))
             });
 
             testPromise("setHeader", () => {
-                expectData(setHeader(ContentType(ApplicationJson)))
-                |> map(toBe("{\"kay\":\"vee\",\"arr\":[\"r\"],\"dk\":\"dict key\",\"DK\":\"dict key is here\"}"))
+                expectData(setHeader(ContentType(ApplicationJson)), sendMixed)
+                |> map(toBe({|{"0":"r","1":"r","kay":"vee","keyedArr":["r"],"dk":"dict key","DK":"dict key is here"}|}))
             });
         });
     });
