@@ -98,9 +98,6 @@ let sendJson = (json, req) => req
     |> send(Js.Json.stringify(json));
 
 [@bs.send.pipe: request(acceptsBody)]
-external field : (string, Js.Json.t) => request(acceptsBody) = "field";
-
-[@bs.send.pipe: request(acceptsBody)]
 external type_: ([@bs.string] [`json | `form]) => request(acceptsBody) = "type";
 
 [@bs.send.pipe: request(acceptsBody)]
