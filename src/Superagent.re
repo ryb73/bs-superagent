@@ -98,9 +98,15 @@ let send = (json, req) => req
 
 let sendKV = (key, value, req) =>
     [| (key, value) |]
-        |> Js.Dict.fromArray
-        |> Js.Json.object_
-        |> send(_, req);
+    |> Js.Dict.fromArray
+    |> Js.Json.object_
+    |> send(_, req);
+
+[@bs.send.pipe: request(acceptsBody)]
+external type_: ([@bs.string] [`json | `form]) => request(acceptsBody) = "type";
+
+[@bs.send.pipe: request(acceptsBody)]
+external field: (string, Js.Json.t) => request(acceptsBody) = "";
 
 [@bs.send] external _end :
     request('a)
