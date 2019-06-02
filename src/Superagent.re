@@ -93,9 +93,15 @@ let query = (key, value, req) =>
 
 [@bs.send.pipe: request(acceptsBody)]
 external send : string => request(acceptsBody) = "";
-let sendJson = (json, req) => req
-    |> setHeader(ContentType(ApplicationJson))
-    |> send(Js.Json.stringify(json));
+
+[@bs.send.pipe: request(acceptsBody)]
+external sendJson : Js.Json.t => request(acceptsBody) = "";
+
+let sendKV = (key, value, req) =>
+    [| (key, value) |]
+    |> Js.Dict.fromArray
+    |> Js.Json.object_
+    |> sendJson(_, req);
 
 [@bs.send.pipe: request(acceptsBody)]
 external type_: ([@bs.string] [`json | `form]) => request(acceptsBody) = "type";
