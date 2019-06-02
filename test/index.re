@@ -34,7 +34,8 @@ post("api/post")
 
 put("api/put")
     |> withCredentials
-    |> send("hey=no")
+    |> sendKV("hey", Js.Json.string("no"))
+    |> sendKV("ok", [|Js.Json.string("no")|] |> Js.Json.array)
     |> end_
     |> then_((result) => {
         Js.log(result);
