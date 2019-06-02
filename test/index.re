@@ -21,7 +21,7 @@ get("api/")
 
 post("api/post")
     |> withCredentials
-    |> send(Js.Json.object_(Js.Dict.fromList([("var", Js.Json.string("var"))])))
+    |> field("var", Js.Json.string("var"))
     |> end_
     |> then_((result) => {
         Js.log(result);
@@ -34,8 +34,7 @@ post("api/post")
 
 put("api/put")
     |> withCredentials
-    |> sendKV("hey", Js.Json.string("no"))
-    |> sendKV("ok", [|Js.Json.string("no")|] |> Js.Json.array)
+    |> send("hey=no")
     |> end_
     |> then_((result) => {
         Js.log(result);
