@@ -146,7 +146,7 @@ let end_ = (req) =>
 
             | None =>
                 Js.Nullable.toOption(err) |? "Unknown Error"
-                    |> Js.Exn.raiseError
+                |> Js.Exn.raiseError
         }
     );
 

@@ -4,10 +4,14 @@
         "@ryb73/decco",
         "@ryb73/opt-ex",
     ],
+    "bs-dev-dependencies": [
+        "@glennsl/bs-jest",
+        "@ryb73/prom-ex",
+    ],
     "sources": [
         { "dir" : "src" },
         {
-            "dir": "test",
+            "dir": "__tests__",
             "type": "dev"
         }
     ],
