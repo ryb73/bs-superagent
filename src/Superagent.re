@@ -95,7 +95,7 @@ let query = (key, value, req) =>
 external send : string => request(acceptsBody) = "";
 
 [@bs.send.pipe: request(acceptsBody)]
-external sendJson : Js.Json.t => request(acceptsBody) = "";
+external sendJson : Js.Json.t => request(acceptsBody) = "send";
 
 let sendKV = (key, value, req) =>
     [| (key, value) |]
