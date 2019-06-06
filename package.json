@@ -29,12 +29,12 @@
   },
   "dependencies": {
     "@ryb73/decco": "0.0.14",
-    "@ryb73/opt-ex": "0.0.8",
-    "superagent": "^5.0.5"
+    "@ryb73/opt-ex": "0.1.0",
+    "superagent": "^5.0.6"
   },
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.8",
-    "@ryb73/prom-ex": "^0.0.10",
+    "@ryb73/prom-ex": "^0.1.0",
     "bs-jest": "^0.3.2",
     "nock": "^10.0.6"
   }
