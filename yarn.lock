@@ -302,10 +302,10 @@
   resolved "https://registry.yarnpkg.com/@ryb73/opt-ex/-/opt-ex-0.1.0.tgz#7426f4822ab5cf9e843f7fc20e8e6f090c54bc46"
   integrity sha512-EA/Aee/2Enh86Wa1NHZQ1iGswfHHlMK4gYVT05kxlx/CoO9dvKqCYcwYErtLSPtfOJoiPj/JNhb4nDGKellrEw==
 
-"@ryb73/prom-ex@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@ryb73/prom-ex/-/prom-ex-0.1.0.tgz#7107d20e7d7addf9d8dab824d407896d08a9ed4a"
-  integrity sha512-Ij7eP0ThK2hOaJK6tRylEHkVVvt7/VtdIP/sqoqw4qTR+PLWQS4lMJlE3aKIbnmYq7VsnEuHYF2UNzJNHZf9jg==
+"@ryb73/prom-ex@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@ryb73/prom-ex/-/prom-ex-0.2.0.tgz#4989a8622323fa4c8080aed47eb8c3e64775707e"
+  integrity sha512-G7xb6ZK/+LPmgfmo0olJ0bOaze+40hhJpEMhKqABUIhcgGHEtPKolTGOmxbkkevOlrPuyajoTWBykTQzEXbMRw==
 
 "@types/babel__core@^7.1.0":
   version "7.1.2"
