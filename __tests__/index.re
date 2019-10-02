@@ -109,3 +109,29 @@ describe("post", () => {
         });
     });
 });
+
+describe("decode undefined statusText", () => {
+    test("result", () =>
+        [%bs.raw {|{
+            statusText: undefined,
+            clientError: false, info: false, notFound: false, ok: false,
+            serverError: false, status: 0, statusCode: 0, statusType: 0, text: ""
+        }|}]
+        |> result_decode
+        |> Belt.Result.getExn
+        |> (({statusText}) => statusText)
+        |> expect |> toBe(None)
+    );
+
+    test("resultWithError", () =>
+        [%bs.raw {|{
+            statusText: undefined,
+            clientError: false, info: false, notFound: false, ok: false,
+            serverError: false, status: 0, statusCode: 0, statusType: 0, text: "", error: false
+        }|}]
+        |> resultWithError_decode
+        |> Belt.Result.getExn
+        |> (({statusText}) => statusText)
+        |> expect |> toBe(None)
+    );
+});

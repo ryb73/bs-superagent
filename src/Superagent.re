@@ -17,22 +17,6 @@ type reqError = {
     stack: string
 };
 
-[@decco]
-type resultWithError = {
-    body: option(Js.Json.t),
-    clientError: bool,
-    info: bool,
-    notFound: bool,
-    ok: bool,
-    serverError: bool,
-    status: int,
-    statusCode: int,
-    statusText: option(string),
-    statusType: int,
-    text: string,
-    error: [@decco.codec Decco.Codecs.falseable] option(reqError)
-};
-
 let encodeUndefined = (encoder, value) =>
     switch value {
         | None => [%bs.raw "undefined"]
@@ -43,6 +27,23 @@ let decodeUndefined = (decoder, json) =>
     (json !== [%bs.raw "undefined"])
         ? Decco.optionFromJson(decoder, json)
         : Ok(None);
+
+[@decco]
+type resultWithError = {
+    body: option(Js.Json.t),
+    clientError: bool,
+    info: bool,
+    notFound: bool,
+    ok: bool,
+    serverError: bool,
+    status: int,
+    statusCode: int,
+    // statusText can be set to undefined on React Native
+    statusText: [@decco.codec (encodeUndefined, decodeUndefined)] option(string),
+    statusType: int,
+    text: string,
+    error: [@decco.codec Decco.Codecs.falseable] option(reqError)
+};
 
 [@decco]
 type result = {

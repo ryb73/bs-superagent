@@ -309,6 +309,11 @@
   dependencies:
     let-anything "^1.0.3"
 
+"@ryb73/res-ex@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@ryb73/res-ex/-/res-ex-0.2.0.tgz#d66d5279237bae57333c94f75c7fe8e4b6b44a75"
+  integrity sha512-LAwhx/0+6LHu/5HN7lPnYu8C99lrgoVk9KpIclFi5Yxvm0H91nJCOdmCCxvtllcVL/z5XgkelWej/EaprEnrsw==
+
 "@types/babel__core@^7.1.0":
   version "7.1.2"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.2.tgz#608c74f55928033fce18b99b213c16be4b3d114f"
