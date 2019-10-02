@@ -1,6 +1,6 @@
 {
   "name": "@ryb73/bs-superagent",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "BuckleScript bindings for superagent",
   "main": "index.js",
   "scripts": {
