@@ -33,6 +33,17 @@ type resultWithError = {
     error: [@decco.codec Decco.Codecs.falseable] option(reqError)
 };
 
+let encodeUndefined = (encoder, value) =>
+    switch value {
+        | None => [%bs.raw "undefined"]
+        | Some(v) => encoder(v)
+    };
+
+let decodeUndefined = (decoder, json) =>
+    (json !== [%bs.raw "undefined"])
+        ? Decco.optionFromJson(decoder, json)
+        : Ok(None);
+
 [@decco]
 type result = {
     body: option(Js.Json.t),
@@ -43,7 +54,8 @@ type result = {
     serverError: bool,
     status: int,
     statusCode: int,
-    statusText: option(string),
+    // statusText can be set to undefined on React Native
+    statusText: [@decco.codec (encodeUndefined, decodeUndefined)] option(string),
     statusType: int,
     text: string,
 };
@@ -68,14 +80,14 @@ exception ParseError(Js.Json.t, Decco.decodeError);
 [@bs.send.pipe : request('a)]
 external setHeaderCustom : string => string => request('a) = "set";
 
-let _getContentTypeString = fun
+let getContentTypeString = fun
     | ApplicationJson => "application/json"
     | ApplicationXWwwFormUrlencoded => "application/x-www-form-urlencoded";
 
 let setHeader = (header, req) =>
     switch header {
-        | ContentType(v) => setHeaderCustom("Content-Type", _getContentTypeString(v), req)
-        | Accept(v) => setHeaderCustom("Accept", _getContentTypeString(v), req)
+        | ContentType(v) => setHeaderCustom("Content-Type", getContentTypeString(v), req)
+        | Accept(v) => setHeaderCustom("Accept", getContentTypeString(v), req)
         | Authorization(authType, credentials) =>
             let key = "Authorization";
             switch authType {
@@ -98,15 +110,15 @@ external type_: ([@bs.string] [`json | `form]) => request(acceptsBody) = "type";
 external send : string => request(acceptsBody) = "";
 
 [@bs.send.pipe: request(acceptsBody)]
-external _sendJson : Js.Json.t => request(acceptsBody) = "send";
+external sendJson : Js.Json.t => request(acceptsBody) = "send";
 
 let sendDict = (dict, req) =>
     Js.Json.object_(dict)
-    |> _sendJson(_, req);
+    |> sendJson(_, req);
 
 let sendArray = (arr, req) =>
     Js.Json.array(arr)
-    |> _sendJson(_, req);
+    |> sendJson(_, req);
 
 let sendKV = (key, value, req) =>
     [| (key, value) |]
@@ -121,7 +133,7 @@ external field: (string, Js.Json.t) => request(acceptsBody) = "";
     => (Js.nullable(string) => Js.nullable(Js.Json.t) => unit)
     => unit = "end";
 
-let _getResultWithoutError = ({ body, clientError, info, notFound, ok,
+let getResultWithoutError = ({ body, clientError, info, notFound, ok,
     serverError, status, statusCode, statusText, statusType, text, error: _ })
 => {
     body,
@@ -148,7 +160,7 @@ let end_ = (req) =>
                     | (_, Error(e)) => reject(ParseError(resp, e))
                     | (Some(_), Ok(resp)) => raise(ReqError(resp))
                     | (_, Ok({ error: Some(_) } as resp)) => raise(ReqError(resp))
-                    | (_, Ok(resp)) => resolve(_getResultWithoutError(resp))
+                    | (_, Ok(resp)) => resolve(getResultWithoutError(resp))
                 }
 
             | None =>
