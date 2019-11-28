@@ -1,6 +1,6 @@
 {
   "name": "@ryb73/bs-superagent",
-  "version": "0.3.1",
+  "version": "0.4.0-bs6.1",
   "description": "BuckleScript bindings for superagent",
   "main": "index.js",
   "scripts": {
@@ -25,18 +25,17 @@
     "url": "git@github.com:ryb73/bs-superagent.git"
   },
   "peerDependencies": {
-    "bs-platform": "^5.0.0"
+    "bs-platform": "^6.0.1"
   },
   "dependencies": {
-    "@ryb73/decco": "0.1.0",
-    "@ryb73/opt-ex": "0.2.0",
+    "@ryb73/opt-ex": "^0.3.1",
+    "decco": "^1.0.0",
     "superagent": "^5.1.0"
   },
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.9",
-    "@ryb73/prom-ex": "^0.3.1",
-    "bs-jest": "^0.3.2",
-    "bs-platform": "^5.0.6",
-    "nock": "^11.3.5"
+    "@ryb73/prom-ex": "^1.0.1",
+    "bs-platform": "^6.0.1",
+    "nock": "^11.7.0"
   }
 }

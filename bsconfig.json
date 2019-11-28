@@ -1,8 +1,8 @@
 {
     "name": "@ryb73/bs-superagent",
     "bs-dependencies": [
-        "@ryb73/decco",
         "@ryb73/opt-ex",
+        "decco",
     ],
     "bs-dev-dependencies": [
         "@glennsl/bs-jest",
@@ -15,7 +15,7 @@
             "type": "dev"
         }
     ],
-    "ppx-flags": [ "@ryb73/decco/ppx/ppx_decco.sh" ],
+    "ppx-flags": [ "decco/ppx" ],
     "refmt": 3,
     "bsc-flags": [ "-w -105" ]
 }
