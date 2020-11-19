@@ -105,7 +105,7 @@ let query = (key, value, req) =>
         |> queryMultiple(_, req);
 
 [@bs.send.pipe: request(acceptsBody)]
-external type_: ([@bs.string] [`json | `form]) => request(acceptsBody) = "type";
+external type_: ([`json | `form]) => request(acceptsBody) = "type";
 
 [@bs.send.pipe: request(acceptsBody)]
 external send : string => request(acceptsBody) = "";

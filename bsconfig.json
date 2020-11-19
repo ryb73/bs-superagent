@@ -1,4 +1,5 @@
 {
+    "$schema": "https://raw.githubusercontent.com/rescript-lang/rescript-compiler/master/docs/docson/build-schema.json",
     "name": "@ryb73/bs-superagent",
     "bs-dependencies": [
         "@ryb73/opt-ex",
@@ -17,5 +18,7 @@
     ],
     "ppx-flags": [ "decco/ppx" ],
     "refmt": 3,
-    "bsc-flags": [ "-w -105" ]
+    "warnings": {
+        "number": "+A-4-9-41-105"
+    }
 }
