@@ -1544,7 +1544,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"combined-stream@npm:^1.0.6, combined-stream@npm:~1.0.6":
+"combined-stream@npm:^1.0.6, combined-stream@npm:^1.0.8, combined-stream@npm:~1.0.6":
   version: 1.0.8
   resolution: "combined-stream@npm:1.0.8"
   dependencies:
@@ -1697,11 +1697,11 @@ __metadata:
   linkType: hard
 
 "decco@npm:^1.0.0":
-  version: 1.0.0
-  resolution: "decco@npm:1.0.0"
+  version: 1.3.0
+  resolution: "decco@npm:1.3.0"
   peerDependencies:
-    bs-platform: ^6.0.1
-  checksum: 0b8c24476ffd2faa352dbf02c1bc57d52e25868429aeec6ddd538c5f95b347789e678d9a37422f1f4ef5376af504bece4b23e509edbf9948426d7f79bff46f59
+    bs-platform: 6 || 7 || 8
+  checksum: fca57a54c9b595e383a64833c5566ef27c74c12d14ab02aa1daeafd474091d25b2481f7dcd2ccd4f2b4d2c75821407d54dc54cce9d3315391025424c0c237384
   languageName: node
   linkType: hard
 
@@ -2056,7 +2056,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-safe-stringify@npm:^2.0.6":
+"fast-safe-stringify@npm:^2.0.7":
   version: 2.0.7
   resolution: "fast-safe-stringify@npm:2.0.7"
   checksum: 7bd22543263b707870d70c6f2336b6e8563e34d6807dc388cc0566895e31e0a8273af017a7eb1c9538d0ef54288284e1c0585b557bd856491295a847159fd929
@@ -2117,14 +2117,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"form-data@npm:^2.3.3":
-  version: 2.5.1
-  resolution: "form-data@npm:2.5.1"
+"form-data@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "form-data@npm:3.0.0"
   dependencies:
     asynckit: ^0.4.0
-    combined-stream: ^1.0.6
+    combined-stream: ^1.0.8
     mime-types: ^2.1.12
-  checksum: c46ee9a14a8678b6e0dfafabc96e25237d9f11ced9c51cd371a2b3448f6a3f2fa684b3bbbb35911bae8f5448b3f3c48c73f7f2be791a4ae5aee0eb0ab3cdfec2
+  checksum: 1af88217b449eda6566a0d95185f2baa403ed2a0e3b11547069f6062be66cbac7c8d7a25f0fc59560702e96526e659b5b9e5a8c6fefe00f06da44338191a9133
   languageName: node
   linkType: hard
 
@@ -2139,10 +2139,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"formidable@npm:^1.2.1":
-  version: 1.2.1
-  resolution: "formidable@npm:1.2.1"
-  checksum: 266aa3140a8316b04b8ec4b1874ce980fce0ee6908c11f6535cc9ca5c992ac0c4e6d6894efa4b59b3a01543b53b2f0a43cbbcf1c16e01f063b8ce5f70be48d40
+"formidable@npm:^1.2.2":
+  version: 1.2.2
+  resolution: "formidable@npm:1.2.2"
+  checksum: 9fe5ef38d5881ac16cc8ca78bd3229fbf32b10e0fd3b718ec20f86ea1de7302aa0ffcfa9a9163cec02fc3f825faf9d0533f24539bb20ae6d73b580b526c25edb
   languageName: node
   linkType: hard
 
@@ -3563,12 +3563,12 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"mime@npm:^2.4.4":
-  version: 2.4.4
-  resolution: "mime@npm:2.4.4"
+"mime@npm:^2.4.6":
+  version: 2.4.6
+  resolution: "mime@npm:2.4.6"
   bin:
     mime: cli.js
-  checksum: 1507e1df9768d857cbae9871ff7888c9d40bac675e9c57ad5f7071faf62e2a4efed62aaf3134287b1e98a3446374cb2506fef48e7e3b45a2ea5715b0f6440d63
+  checksum: 319ec3858894aa9befa9da90e33c4422506689f1e3e7c939095df68abe848050a51070c78a31061769d9192051a8c9f33d14d6771dc0f2ff309fe846898e0807
   languageName: node
   linkType: hard
 
@@ -4111,10 +4111,10 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"qs@npm:^6.7.0":
-  version: 6.9.1
-  resolution: "qs@npm:6.9.1"
-  checksum: acc162048da4faa4cf65544b2bc7f3df35dd167c1796a0ef82c857e77844bb002ce14b678cd9be442ddc31cb8cb71d719c68a460cf11ada63b3e69ca1f70aa3b
+"qs@npm:^6.9.4":
+  version: 6.9.4
+  resolution: "qs@npm:6.9.4"
+  checksum: beba62d1e1c66e9888cc08a488eb95771c252a92289a96bff4b767a49e4e7afe9487d7ee3269b856292d8281b855ac5eac927c2e77f845e407ee4fe54743fea7
   languageName: node
   linkType: hard
 
@@ -4170,14 +4170,14 @@ fsevents@^2.1.2:
   languageName: node
   linkType: hard
 
-"readable-stream@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "readable-stream@npm:3.4.0"
+"readable-stream@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "readable-stream@npm:3.6.0"
   dependencies:
     inherits: ^2.0.3
     string_decoder: ^1.1.1
     util-deprecate: ^1.0.1
-  checksum: da65cfbd7636fe9e75a466435c96f54451e28c135573b2fb3c071111c887c471b63587e46a272210abdca4774bae5272e5c6cbf18b15e0c53f0937c864cb695d
+  checksum: f178b1daa80d9e58ebba71dbb08486430aa6f0dea3a22a1b7401f3f6983077d0bc0edea43099db06b8d006c9ad48d6383e8fb72c05d5b187670aeaf1b9b44f00
   languageName: node
   linkType: hard
 
@@ -4431,7 +4431,7 @@ resolve@^1.18.1:
   languageName: node
   linkType: hard
 
-"semver@npm:^6.0.0, semver@npm:^6.1.1, semver@npm:^6.3.0":
+"semver@npm:^6.0.0, semver@npm:^6.3.0":
   version: 6.3.0
   resolution: "semver@npm:6.3.0"
   bin:
@@ -4821,21 +4821,21 @@ resolve@^1.18.1:
   linkType: hard
 
 "superagent@npm:^5.1.0":
-  version: 5.1.1
-  resolution: "superagent@npm:5.1.1"
+  version: 5.3.1
+  resolution: "superagent@npm:5.3.1"
   dependencies:
     component-emitter: ^1.3.0
     cookiejar: ^2.1.2
     debug: ^4.1.1
-    fast-safe-stringify: ^2.0.6
-    form-data: ^2.3.3
-    formidable: ^1.2.1
+    fast-safe-stringify: ^2.0.7
+    form-data: ^3.0.0
+    formidable: ^1.2.2
     methods: ^1.1.2
-    mime: ^2.4.4
-    qs: ^6.7.0
-    readable-stream: ^3.4.0
-    semver: ^6.1.1
-  checksum: 2dc3a348c05bbbd2a541b0a815114dfac48d7a25072f7a78498fb73621ed23a8851f025ce6a0b0b8d76c0b23a96236f36c31eef8622a343a91ebad33823c5944
+    mime: ^2.4.6
+    qs: ^6.9.4
+    readable-stream: ^3.6.0
+    semver: ^7.3.2
+  checksum: 369d3727aa400b590854481a4811d7ed4a8224f3ce3ec4a1dac92f573345d3785f173c7cb822560b8a799b9981dcef16c19d1bf175f5e72cc555695d20588e16
   languageName: node
   linkType: hard
 
